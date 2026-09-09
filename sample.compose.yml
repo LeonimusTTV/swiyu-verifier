@@ -12,6 +12,8 @@ services:
       interval: 5s
       timeout: 5s
       retries: 5
+    networks:
+      - dokploy-network
   verifier-service:
     image: ghcr.io/swiyu-admin-ch/swiyu-verifier:4.2.0
     configs:
@@ -19,6 +21,13 @@ services:
         target: /verifier_metadata.json
     ports:
       - "8083:8080"
+    depends_on:
+      verifier_postgres:
+        condition: service_healthy
+    networks:
+      dokploy-network:
+        aliases:
+          - swiyu-internal
     environment:
       EXTERNAL_URL: ${EXTERNAL_URL}
       OPENID_CLIENT_METADATA_FILE: file:/verifier_metadata.json
@@ -59,3 +68,7 @@ configs:
             }
         }
       }
+
+networks:
+  dokploy-network:
+    external: true
