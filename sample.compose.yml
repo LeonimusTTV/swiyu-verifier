@@ -8,12 +8,12 @@ services:
     ports:
       - "5434:5432"
     healthcheck:
-      test: [ "CMD-SHELL", "pg_isready -U verifier_user -d verifier_db" ]
+      test: ["CMD-SHELL", "pg_isready -U verifier_user -d verifier_db"]
       interval: 5s
       timeout: 5s
       retries: 5
   verifier-service:
-    image: ghcr.io/swiyu-admin-ch/swiyu-verifier:latest
+    image: ghcr.io/swiyu-admin-ch/swiyu-verifier:4.2.0
     configs:
       - source: verifier_metadata
         target: /verifier_metadata.json
