@@ -13,7 +13,9 @@ services:
       timeout: 5s
       retries: 5
     networks:
-      - dokploy-network
+      dokploy-network:
+        aliases:
+          - swiyu-internal
   verifier-service:
     image: ghcr.io/swiyu-admin-ch/swiyu-verifier:4.2.0
     configs:
